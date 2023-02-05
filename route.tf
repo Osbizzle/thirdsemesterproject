@@ -1,5 +1,5 @@
 variable "domain_name" {
-  default    = "virgo.name.ng"
+  default    = "demo.ng"
   type        = string
   description = "Domain name"
 }

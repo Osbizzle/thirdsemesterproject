@@ -58,7 +58,7 @@ resource "aws_subnet" "server-public-subnet1" {
     vpc_id                  = aws_vpc.server_vpc.id
     cidr_block              = "10.0.1.0/24"
     map_public_ip_on_launch = true
-    availability_zone       = "eu-west-2a"
+    availability_zone       = "us-east-1a"
     tags = {
         Name = "server-public-subnet1"
     }
@@ -70,7 +70,7 @@ resource "aws_subnet" "server-public-subnet2" {
     vpc_id                  = aws_vpc.server_vpc.id
     cidr_block              = "10.0.2.0/24"
     map_public_ip_on_launch = true
-    availability_zone       = "eu-west-2b"
+    availability_zone       = "us-east-1b"
     tags = {
         Name = "server-public-subnet2"
     }
@@ -188,12 +188,12 @@ resource "aws_security_group" "server-security-grp-rule" {
 #  instance 1
 
 resource "aws_instance" "server1" {
-  ami             = "ami-07cc2de0e29e04a9f"
+  ami             = "ami-00874d747dde814fa"
   instance_type   = "t2.micro"
-  key_name        = "coast"
+  key_name        = "terra-key"
   security_groups = [aws_security_group.server-security-grp-rule.id]
   subnet_id       = aws_subnet.server-public-subnet1.id
-  availability_zone = "eu-west-2a"
+  availability_zone = "us-east-1a"
 
   tags = {
     Name   = "server1"
@@ -204,12 +204,12 @@ resource "aws_instance" "server1" {
 # instance 2
 
  resource "aws_instance" "server2" {
-  ami             = "ami-07cc2de0e29e04a9f"
+  ami             = "ami-00874d747dde814fa"
   instance_type   = "t2.micro"
-  key_name        = "coast"
+  key_name        = "terra-key"
   security_groups = [aws_security_group.server-security-grp-rule.id]
   subnet_id       = aws_subnet.server-public-subnet2.id
-  availability_zone = "eu-west-2b"
+  availability_zone = "us-east-1b"
   
 
   tags = {
@@ -222,12 +222,12 @@ resource "aws_instance" "server1" {
 # instance 3
 
 resource "aws_instance" "server3" {
-  ami             = "ami-07cc2de0e29e04a9f"
+  ami             = "ami-00874d747dde814fa"
   instance_type   = "t2.micro"
-  key_name        = "coast"
+  key_name        = "terra-key"
   security_groups = [aws_security_group.server-security-grp-rule.id]
   subnet_id       = aws_subnet.server-public-subnet1.id
-  availability_zone = "eu-west-2a"
+  availability_zone = "us-east-1a"
 
   
 
@@ -241,7 +241,7 @@ resource "aws_instance" "server3" {
 # To store the IP addresses of the instances
 
 resource "local_file" "Ip_address" {
-  filename = "/vagrant/TerraformAltschool/host-inventory"
+  filename = "/home/ec2-user/thirdsemesterproject/ansible/host-inventory"
   content  = <<EOT
 ${aws_instance.server1.public_ip}
 ${aws_instance.server2.public_ip}
